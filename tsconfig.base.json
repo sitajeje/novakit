@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "jsx": "react-jsx",
+        "strict": true,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@novakit/ui/*": ["packages/ui/src/*"]
+        },
+        "types": ["node", "react", "react-dom"],
+        "lib": ["DOM","ESNext"],
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "declarationMap": true,
+        "resolveJsonModule": true,
+        "outDir": "dist",
+        "composite": true,
+        "incremental": true,
+        "noUncheckedIndexedAccess": true
+    }
+}

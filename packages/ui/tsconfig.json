@@ -1,0 +1,21 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "lib": ["DOM", "ESNext"],
+        "types": ["node", "react", "react-dom"],
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "rootDir": ".",
+        "outDir": "dist",
+        "composite": true,
+        "incremental": true,
+        "declaration": true,
+        "declarationMap": true
+    },
+    "include": ["src", ".storybook", "scripts"],
+    "exclude": ["node_modules", "dist"]
+}

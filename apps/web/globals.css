@@ -1,0 +1,25 @@
+/* apps/web/global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Reset 浏览器样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body 样式 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* 通用 Button 样式 */
+button {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
