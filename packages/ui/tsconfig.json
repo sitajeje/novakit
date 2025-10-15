@@ -3,7 +3,7 @@
     "compilerOptions": {
         "jsx": "react-jsx",
         "lib": ["DOM", "ESNext"],
-        "types": ["node", "react", "react-dom", "vitest"],
+        "types": ["node", "react", "react-dom", "vitest/globals"],
         "module": "ESNext",
         "moduleResolution": "Node",
         "esModuleInterop": true,

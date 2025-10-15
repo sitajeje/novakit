@@ -1,7 +1,7 @@
-# 🧭 NovaKit — Frontend Architecture Monorepo
+# 🧭 NovaKit — A Modern Multi-tenant SaaS Dashboard Starter
 
-NovaKit is a **modern frontend architecture toolkit** designed to accelerate the development of scalable and maintainable design systems.  
-It serves as both a **learning playground** for frontend architecture mastery and a **production-ready toolkit** for building React-based UI libraries and applications.
+NovaKit is a modern multi-tenant SaaS dashboard starter built with Turborepo, Next.js, Tailwind, and Supabase.
+It provides a clean architecture for scalable front-end projects with cloud deployment and CI/CD ready out of the box.
 
 ---
 
@@ -60,12 +60,23 @@ The ultimate goal:
 
 novakit/
 ├── apps/
-│ └── web/ # Future demo or production app
+│   ├── web/               # 主应用：Next.js Dashboard
+│   └── docs/              # Storybook or Documentation Site
+│
 ├── packages/
-│ ├── ui/ # Shared React UI components
-│ ├── config/ (planned) # Shared lint/build configs
-│ └── scripts/ # Custom CLI tools (create-component, etc.)
-└── turbo.json # Turborepo config
+│   ├── ui/                # 共享组件库（Button, Card, etc.）
+│   ├── config/            # Tailwind、ESLint、tsconfig 等共享配置
+│   └── utils/             # 可选：通用 hooks / helpers
+│
+├── .github/
+│   └── workflows/
+│       ├── deploy.yml     # CI/CD 配置（Lint + Build + Vercel Deploy）
+│
+├── turbo.json             # Turborepo 配置文件
+├── package.json
+├── pnpm-workspace.yaml
+└── README.md
+
 
 
 ---
