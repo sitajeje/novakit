@@ -3,7 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
   "dependencies": {
     "clsx": "^2.1.0"
   },
@@ -38,7 +47,7 @@
     "vitest": "^3.2.4"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsup src/index.ts --dts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "new": "ts-node scripts/create-component.ts",

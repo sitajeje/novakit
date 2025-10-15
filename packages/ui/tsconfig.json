@@ -3,8 +3,9 @@
     "compilerOptions": {
         "jsx": "react-jsx",
         "lib": ["DOM", "ESNext"],
-        "types": ["node", "react", "react-dom", "vitest/globals"],
+        "types": ["node", "react", "react-dom", "vitest"],
         "module": "ESNext",
+        "target": "ESNext",
         "moduleResolution": "Node",
         "esModuleInterop": true,
         "strict": true,
@@ -14,8 +15,10 @@
         "composite": true,
         "incremental": true,
         "declaration": true,
+        "declarationDir": "dist",
         "forceConsistentCasingInFileNames": true,
-        "declarationMap": true
+        "declarationMap": true,
+        "emitDeclarationOnly": false
     },
     "include": ["src", ".storybook", "scripts","tests", "vitest.setup.ts"],
     "exclude": ["node_modules", "dist"]
