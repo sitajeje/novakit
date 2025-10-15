@@ -9,4 +9,6 @@ export default defineConfig({
     splitting: false,
     target: 'esnext',
     outDir: 'dist',
+    minify: false,
+    external: ['react', 'react-dom']
 });
