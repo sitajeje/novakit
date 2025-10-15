@@ -3,6 +3,7 @@ import clsx from 'clsx';
 
 export interface InputProps extends React.HTMLAttributes<HTMLDivElement> {
   label?: string;
+  disabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({ label, children, className, ...props }) => {

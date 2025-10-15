@@ -1,3 +1,4 @@
+// .storybook/main.ts
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
@@ -6,6 +7,7 @@ const config: StorybookConfig = {
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-interactions',
+
     ],
     framework: { name: '@storybook/react-vite', options: {} },
     typescript: { check: true, reactDocgen: 'react-docgen-typescript' },

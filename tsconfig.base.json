@@ -10,7 +10,7 @@
         "paths": {
             "@novakit/ui/*": ["packages/ui/src/*"]
         },
-        "types": ["node", "react", "react-dom"],
+        "types": ["node", "react", "react-dom","storybook__addon-actions"],
         "lib": ["DOM","ESNext"],
         "moduleResolution": "NodeNext",
         "esModuleInterop": true,
