@@ -6,21 +6,26 @@
         "types": ["node", "react", "react-dom", "vitest/globals"],
         "module": "ESNext",
         "target": "ESNext",
-        "moduleResolution": "Node",
+        "moduleResolution": "Bundler",
         "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "strict": true,
         "skipLibCheck": true,
         "rootDir": ".",
-        "outDir": "dist",
+        "outDir": "./dist",
         "composite": true,
         "incremental": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
         "tsBuildInfoFile": "./node_modules/.cache/tsbuildinfo.json",
         "declaration": true,
         "declarationDir": "dist",
         "forceConsistentCasingInFileNames": true,
         "declarationMap": true,
-        "emitDeclarationOnly": false
+        "emitDeclarationOnly": false,
+        "baseUrl": ".",
+        "allowJs": false
     },
-    "include": ["src", ".storybook", "scripts","tests", "vitest.setup.ts"],
-    "exclude": ["node_modules", "dist", "tests", "**/*.test.ts", "**/*.test.tsx"]
+    "include": ["src","src/**/*", ".storybook", "scripts/**/*","tests", "vitest.setup.ts"],
+    "exclude": ["node_modules", "dist", "tests","**/*.stories.tsx", "**/*.test.ts", "**/*.test.tsx"]
 }

@@ -4,6 +4,8 @@
     "jsx": "preserve",
     "moduleResolution": "Bundler",
     "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
     "paths": {
       "@novakit/ui": [
         "../../packages/ui/dist"
@@ -12,12 +14,13 @@
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "skipLibCheck": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
   ],
   "exclude": [
     "node_modules"

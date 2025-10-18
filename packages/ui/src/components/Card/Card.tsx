@@ -6,7 +6,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   actions?: { label: string; onClick?: () => void }[];
 }
 
-const Card: React.FC<CardProps> = ({ title, actions = [],children, className, ...props }) => {
+export default function Card ({ title, actions = [],children, className, ...props }:CardProps) {
   return (
     <div className={`rounded-xl shadow p-4 bg-white ${className}`} {...props}>
       {title && <h3 className="text-lg font-semibold mb-2">{title}</h3>}
@@ -29,4 +29,3 @@ const Card: React.FC<CardProps> = ({ title, actions = [],children, className, ..
   );
 };
 
-export default Card;

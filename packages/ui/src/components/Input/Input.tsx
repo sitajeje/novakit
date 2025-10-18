@@ -1,12 +1,14 @@
+// packages/ui/src/components/Input/Input.tsx
 import React from 'react';
 import clsx from 'clsx';
 
-export interface InputProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
   label?: string;
-  disabled?: boolean;
+  placeholder?: string;
+  disabled?: boolean;  
 }
 
-const Input: React.FC<InputProps> = ({ label, children, className, ...props }) => {
+export default function Input({ label, className, ...props }: InputProps) {
   return (
     <label className="flex flex-col gap-1">
       {label && <span className="text-sm font-medium text-gray-700">{label}</span>}
@@ -19,6 +21,5 @@ const Input: React.FC<InputProps> = ({ label, children, className, ...props }) =
       />
     </label>
   );
-};
+}
 
-export default Input;

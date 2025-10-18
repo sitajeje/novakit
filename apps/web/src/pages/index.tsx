@@ -1,16 +1,13 @@
 // apps/web/src/pages/index.tsx
 import { Button } from '@novakit/ui';
+import LoginPage from './login';
+import RegisterPage from './register';
 
 
 export default function Page() {
     return (
         <div className="p-6">
-        <Button variant="primary" size="md">
-            提交
-        </Button>
-        <Button variant="secondary" size="sm" className="ml-2">
-            取消
-        </Button>
+        <RegisterPage />
         </div>
     );
 }

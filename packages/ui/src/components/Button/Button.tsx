@@ -24,7 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   className,
   ...props
-}) => {
+}: ButtonProps): React.ReactElement => {
   const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-all focus:outline-none';
 
   const variants: Record<ButtonVariant, string> = {
@@ -65,6 +65,5 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
+
 export default Button;
-
-

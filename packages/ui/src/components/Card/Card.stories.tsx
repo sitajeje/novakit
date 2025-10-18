@@ -1,6 +1,7 @@
 // packages/ui/src/components/Card/Card.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import Card from './Card';
+import type { CardProps } from './Card';
 
 
 const meta: Meta<typeof Card> = {

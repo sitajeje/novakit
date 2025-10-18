@@ -1,8 +1,9 @@
 // packages/ui/src/components/Input/Input.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import Input from './Input';
+import type { InputProps } from './Input'; 
 
-const meta: Meta<typeof Input> = {
+const meta: Meta<InputProps> = {
   title: 'Components/Input',
   component: Input,
   tags: ['autodocs'],
@@ -15,7 +16,7 @@ const meta: Meta<typeof Input> = {
   },
 };
 export default meta;
-type Story = StoryObj<typeof Input>;
+type Story = StoryObj<InputProps>;
 
 export const Default: Story = {
   args: {

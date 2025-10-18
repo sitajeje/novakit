@@ -1,8 +1,9 @@
 // packages/ui/src/components/Button/Button.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
+import type { ButtonProps } from './Button';
 
-const meta: Meta<typeof Button> = {
+const meta: Meta<ButtonProps> = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'], // ✅ 启用 Auto Docs Props 表格
@@ -15,7 +16,7 @@ const meta: Meta<typeof Button> = {
   },
 };
 export default meta;
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<ButtonProps>;
 
 export const Primary: Story = {
   args: {
