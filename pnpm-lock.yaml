@@ -32,6 +32,9 @@ importers:
       lucide-react:
         specifier: ^0.546.0
         version: 0.546.0(react@18.2.0)
+      next:
+        specifier: ^14.2.3
+        version: 14.2.33(@babel/core@7.28.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -131,7 +134,7 @@ importers:
         version: link:../../packages/ui
       next:
         specifier: 14.2.33
-        version: 14.2.33(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 14.2.33(@babel/core@7.28.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -9681,7 +9684,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@14.2.33(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next@14.2.33(@babel/core@7.28.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@next/env': 14.2.33
       '@swc/helpers': 0.5.5
@@ -9691,7 +9694,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(react@18.2.0)
+      styled-jsx: 5.1.1(@babel/core@7.28.4)(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.2.33
       '@next/swc-darwin-x64': 14.2.33
@@ -10518,10 +10521,12 @@ snapshots:
     dependencies:
       js-tokens: 9.0.1
 
-  styled-jsx@5.1.1(react@18.2.0):
+  styled-jsx@5.1.1(@babel/core@7.28.4)(react@18.2.0):
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
+    optionalDependencies:
+      '@babel/core': 7.28.4
 
   sucrase@3.35.0:
     dependencies:
