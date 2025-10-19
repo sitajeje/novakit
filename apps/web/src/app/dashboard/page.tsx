@@ -1,7 +1,7 @@
 // apps/web/src/pages/dashboard.tsx
 'use client';
 import { useEffect, useState } from "react";
-import { supabase } from "../../../lib/supabaseClient";
+import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { Button, TenantSelect, ProjectSelect,Card, CardHeader,CardTitle,CardDescription,CardContent,CardFooter} from "@novakit/ui";
 

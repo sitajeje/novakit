@@ -1,22 +1,16 @@
-// apps/web/src/pages/api/create-tenant.ts
+// apps/web/src/pages/api/create-tenant/route.ts
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "@supabase/supabase-js";
+import { NextResponse } from "next/server";
+import { withApiHandler } from "../_utils/apiHandler";
+import { supabaseAdmin } from "../_utils/supabaseAdmin";
 
-const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY! // ⚠️ 非公开 key
-);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" });
-    }
-
+export const POST = withApiHandler(async (req: Request) => {
     try {
-        const { name, user_id } = req.body;
+        const { name, user_id } = await req.json();
 
         if (!name || !user_id) {
-        return res.status(400).json({ error: "Missing name or user_id" });
+            return NextResponse.json({ error: "Missing name or user_id" }, { status: 400 });
         }
 
         // 检查是否重名（同一个用户下不能重名）
@@ -26,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             .eq("user_id", user_id)
             .eq("tenants.name", name);
         if (existing && existing.length > 0) {
-            return res.status(400).json({ error: "Tenant with the same name already exists." });
+            return NextResponse.json({ error: "Tenant with the same name already exists." }, { status: 400 });
         }
 
         // 创建 tenant
@@ -53,9 +47,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (profileError) throw profileError;
 
-        return res.status(200).json({ success: true, tenant });
+        return NextResponse.json({ success: true, tenant }, { status: 200 });
     } catch (err: any) {
         console.error("Create tenant failed:", err);
-        return res.status(500).json({ error: err.message });
+        return NextResponse.json({ error: err.message }, { status: 500 });
     }
+});
+// 可选：添加 GET 方法，方便浏览器直接访问时提示信息
+export async function GET() {
+    return NextResponse.json(
+        { message: "POST /api/create-tenant to create a new tenant" },
+        { status: 200 }
+    );
 }
