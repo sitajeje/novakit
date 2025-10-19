@@ -1,25 +1,18 @@
-// apps/web/src/pages/login.tsx
-import { useState, useEffect } from "react";
-import { supabase } from "../../lib/supabaseClient";
+// apps/web/src/pages/register.tsx
+import { useState } from "react";
+import { supabase } from "../../../lib/supabaseClient";
 import { useRouter } from "next/router";
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    useEffect(() => {
-        // 如果已登录，跳转到 /dashboard
-        supabase.auth.getSession().then(({ data }) => {
-        if (data.session) router.replace("/dashboard");
-        });
-    }, []);
-
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signUp({
         email,
         password
         });
@@ -28,13 +21,15 @@ export default function LoginPage() {
         alert(error.message);
         return;
         }
-        router.push("/dashboard");
+        // Supabase by default sends confirmation email if enabled.
+        alert("Registration success. Check your email for confirmation if required.");
+        router.push("/login");
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
-        <form onSubmit={handleLogin} className="w-full max-w-md bg-white p-6 rounded shadow">
-            <h2 className="text-xl mb-4">Login</h2>
+        <form onSubmit={handleRegister} className="w-full max-w-md bg-white p-6 rounded shadow">
+            <h2 className="text-xl mb-4">Register</h2>
             <label className="block mb-2">Email
             <input type="email" value={email} onChange={e=>setEmail(e.target.value)} className="w-full border px-2 py-1 rounded" required/>
             </label>
@@ -42,15 +37,8 @@ export default function LoginPage() {
             <input type="password" value={password} onChange={e=>setPassword(e.target.value)} className="w-full border px-2 py-1 rounded" required/>
             </label>
             <button type="submit" disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded">
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Registering..." : "Register"}
             </button>
-            {/* 新增注册链接 */}
-            <p className="text-sm text-center text-gray-600">
-            Don’t have an account?{" "}
-            <a href="/register" className="text-blue-600 hover:underline">
-                Create one
-            </a>
-            </p>
         </form>
         </div>
     );

@@ -1,8 +1,9 @@
 // apps/web/src/pages/dashboard.tsx
+'use client';
 import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabaseClient";
-import { useRouter } from "next/router";
-import { Button, TenantSelect, ProjectSelect } from "@novakit/ui";
+import { supabase } from "../../../lib/supabaseClient";
+import { useRouter } from "next/navigation";
+import { Button, TenantSelect, ProjectSelect,Card, CardHeader,CardTitle,CardDescription,CardContent,CardFooter} from "@novakit/ui";
 
 type Tenant = { id: string; name: string };
 type Project = { id: string; name: string; description?: string; tenant_id: string };
@@ -20,7 +21,7 @@ export default function DashboardPage() {
         const init = async () => {
         const { data } = await supabase.auth.getSession();
         if (!data.session) {
-            router.replace("/login");
+            router.replace("../login/login");
             return;
         }
         const user = data.session.user;
@@ -32,7 +33,7 @@ export default function DashboardPage() {
 
         // 监听 auth 状态变化（登出）
         const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-        if (!session) router.replace("/login");
+        if (!session) router.replace("../login/login");
         });
         return () => listener?.subscription?.unsubscribe?.();
     }, []);
@@ -55,7 +56,6 @@ export default function DashboardPage() {
             return;
         }
         const tlist = (tm || []).map((r: any) => r.tenants).filter(Boolean);
-        console.log('Fetched tenants:', tlist);
         setTenants(tlist);
         // 自动选择第一个 tenant（仅首次）
         if (!selectedTenant && tlist.length > 0) {
@@ -172,10 +172,31 @@ export default function DashboardPage() {
             <div className="space-y-2">
             {projects.length === 0 && <div className="text-gray-500">No projects yet.</div>}
             {projects.map(p => (
-                <div key={p.id} className="p-3 border rounded">
-                <div className="font-semibold">{p.name}</div>
-                <div className="text-sm text-gray-600">{p.description}</div>
-                </div>
+                <Card key={p.id} className="p-3 border rounded hover:translate-y-[-3px] transition-transform cursor-pointer">
+                <CardHeader>
+                    <CardTitle>{p.name}</CardTitle>
+                    {p.description && (
+                    <CardDescription>{p.description}</CardDescription>
+                    )}
+                </CardHeader>
+
+                <CardContent>
+                    <p className="text-sm text-muted-foreground">
+                    Tenant ID: {p.tenant_id}
+                    </p>
+                </CardContent>
+                <CardFooter>
+                    <Button
+                    className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition"
+                    onClick={() => {
+                        setSelectedProject(p.id);
+                        router.push(`/projects/${p.id}`);
+                    }}
+                    >
+                    Open
+                    </Button>
+                </CardFooter>
+                </Card>
             ))}
             </div>
         </div>

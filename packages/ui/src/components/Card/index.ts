@@ -1,1 +1,9 @@
-export { default } from './Card';
+export {
+    Card,
+    CardHeader,
+    CardContent,
+    CardFooter,
+    CardTitle,
+    CardDescription,
+} from "./Card";
+

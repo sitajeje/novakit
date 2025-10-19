@@ -1,13 +1,11 @@
 // apps/web/src/pages/index.tsx
-import { Button } from '@novakit/ui';
-import LoginPage from './login';
-import RegisterPage from './register';
 
+import LoginPage from './login/page';
 
 export default function Page() {
     return (
         <div className="p-6">
-        <RegisterPage />
+        <LoginPage />
         </div>
     );
 }

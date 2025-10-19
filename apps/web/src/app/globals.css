@@ -16,10 +16,3 @@ body {
     color: #333;
 }
 
-/* 通用 Button 样式 */
-button {
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    cursor: pointer;
-}

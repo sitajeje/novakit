@@ -1,0 +1,30 @@
+:root {
+    /* 色板（HSL 更利于亮/暗计算） */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --primary: 222 84% 56%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 214 32% 91%;
+    --muted-foreground: 222 47% 21%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 222 84% 56%;
+
+    /* 圆角 */
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+
+    /* 字体、字号、阴影等也都可以在这里集中管理 */
+}
+
+.dark {
+    --background: 222 47% 5%;
+    --foreground: 214 32% 91%;
+    --primary: 210 100% 66%;
+    --primary-foreground: 222 47% 5%;
+    --muted: 222 47% 12%;
+    --muted-foreground: 214 32% 91%;
+    --border: 222 47% 12%;
+    --input: 222 47% 12%;
+    --ring: 210 100% 66%;
+}

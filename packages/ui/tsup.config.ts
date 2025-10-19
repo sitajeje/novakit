@@ -3,9 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
     entry: ['src/index.ts'],
     format: ['esm', 'cjs'],
-    dts: {
-        resolve: true, //关键配置：让 tsup 解析跨文件依赖
-    },
+    dts: false,
     sourcemap: true,
     clean: true,
     splitting: false,
@@ -13,5 +11,13 @@ export default defineConfig({
     outDir: 'dist',
     minify: false,
     tsconfig: './tsconfig.json',
-    external: ['react', 'react-dom']
+    external: [
+        'react',
+        'react-dom',
+        '@radix-ui/react-dialog',
+        '@radix-ui/react-slot',
+        'class-variance-authority',
+        'tailwind-merge',
+        'clsx',
+    ],
 });

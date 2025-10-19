@@ -26,6 +26,6 @@
         "baseUrl": ".",
         "allowJs": false
     },
-    "include": ["src","src/**/*", ".storybook", "scripts/**/*","tests", "vitest.setup.ts"],
-    "exclude": ["node_modules", "dist", "tests","**/*.stories.tsx", "**/*.test.ts", "**/*.test.tsx"]
+    "include": ["src","src/**/*",  "scripts/**/*","tailwind.config.ts", "vitest.setup.ts"],
+    "exclude": ["node_modules", "dist", "tests",".storybook","stories","**/*.stories.tsx", "**/*.test.ts", "**/*.test.tsx"]
 }
