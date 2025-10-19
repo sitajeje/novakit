@@ -41,6 +41,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "next": "^14.2.3",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "@supabase/supabase-js": "^2.75.0",
