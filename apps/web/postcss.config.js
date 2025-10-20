@@ -1,4 +1,4 @@
-// packages/ui/postcss.config.js
+// apps/web/postcss.config.js
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 
