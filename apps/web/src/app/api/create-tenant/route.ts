@@ -1,5 +1,4 @@
 // apps/web/src/pages/api/create-tenant/route.ts
-import type { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 import { withApiHandler } from "../_utils/apiHandler";
 import { supabaseAdmin } from "../_utils/supabaseAdmin";
