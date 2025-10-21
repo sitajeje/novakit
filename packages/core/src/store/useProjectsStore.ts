@@ -6,6 +6,7 @@ export type Task = {
     id: string;
     name: string;
     note?: string;
+    status?: boolean; 
     is_done?: boolean;
     created_at?: string;
     project_id?: string;
@@ -56,7 +57,7 @@ export const useProjectsStore = create<TaskStore>((set, get) => ({
         const supabase = createBrowserSupabase(); 
         const { data, error } = await supabase
             .from("tasks")
-            .update({ is_done: newStatus })
+            .update({ status: newStatus })
             .eq("id", taskId)
             .select()
             .single();

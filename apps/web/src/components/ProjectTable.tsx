@@ -42,7 +42,7 @@ export function ProjectTable({ projectId }: Props) {
                     row.original.status ? "line-through text-gray-400" : "text-gray-800"
                     }`}
                 >
-                    {row.original.title}
+                    {row.original.name}
                 </span>
                 ),
             },

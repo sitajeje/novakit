@@ -5,13 +5,13 @@ import { NextResponse } from "next/server";
  * Wraps async API handlers with error and logging middleware.
  * Keeps your route.ts files clean and consistent.
  */
-export function withApiHandler(
-    handler: (req: Request) => Promise<NextResponse>
+export function withApiHandler<TParams = any>(
+    handler: (req: Request, context?: { params?: TParams }) => Promise<NextResponse>
 ) {
-    return async (req: Request): Promise<NextResponse> => {
+    return async (req: Request, context?: { params?: TParams }): Promise<NextResponse> => {
         const start = Date.now();
         try {
-        const res = await handler(req);
+        const res = await handler(req, context);
         console.info(`[API] ${req.method} ${req.url} ✅ ${Date.now() - start}ms`);
         return res;
         } catch (error: any) {

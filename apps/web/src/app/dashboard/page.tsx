@@ -17,6 +17,7 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true);
     const [selectedTenant, setSelectedTenant] = useState<string | null>(null);
     const [selectedProject, setSelectedProject] = useState<string | null>(null);
+    const [inviteEmail, setInviteEmail] = useState("");
 
     useEffect(() => {
         const init = async () => {
@@ -154,6 +155,26 @@ export default function DashboardPage() {
         setProjects(prev => prev.filter(p => p.id !== projectId));
         if (selectedProject === projectId) setSelectedProject(null);
     };
+    //Invite new member by email
+    const handleInvite = async (projectId: string) => {
+        const email = prompt("Enter the email of the user to invite:");
+        if (!email) return;
+
+        const res = await fetch(`/api/projects/${projectId}/invite`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+            alert(`❌ Invite failed: ${data.error}`);
+            return;
+        }
+
+        alert(`✅ Invited ${email} successfully!`);
+    };
+
 
     if (loading) return <div className="p-8">Loading...</div>;
 
@@ -171,6 +192,17 @@ export default function DashboardPage() {
                 <Button className="bg-blue-600" onClick={handleCreateProject}>
                     Create Project
                 </Button>
+                <Button
+                className="bg-yellow-500 ml-2"
+                onClick={async () => {
+                    const { data, error } = await supabase.auth.getUser();
+                    if (error) console.error(error);
+                    alert(JSON.stringify(data, null, 2));
+                }}
+                >
+                Check Session
+                </Button>
+
             </div>
         </div>
 
@@ -218,14 +250,7 @@ export default function DashboardPage() {
 
                 <CardContent>
                     {selectedProject === p.id && (
-                        <div className="mt-4 space-y-3">
-                            {p.description && (
-                            <div className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg border">
-                                {p.description}
-                            </div>
-                            )}
                             <ProjectTable projectId={p.id} />
-                        </div>
                     )}
                 </CardContent>
                 <CardFooter>
@@ -240,6 +265,7 @@ export default function DashboardPage() {
                     </Button>
                     <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleUpdateProject(p.id)}>Edit</Button>
                     <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleDeleteProject(p.id)}>Delete</Button>
+                    <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleInvite(p.id)}>Invite</Button>
                 </CardFooter>
                 </Card>
             ))}
