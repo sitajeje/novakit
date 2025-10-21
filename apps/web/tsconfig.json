@@ -7,9 +7,9 @@
     "rootDir": ".",
     "outDir": "dist",
     "paths": {
-      "@novakit/ui": [
-        "../../packages/ui/dist"
-      ]
+      "@novakit/ui": ["../../packages/ui/dist"],
+      "@novakit/core": ["../../packages/core/dist"],
+      "@novakit/core/*": ["../../packages/core/dist/*"]
     },
     "allowJs": true,
     "noEmit": true,

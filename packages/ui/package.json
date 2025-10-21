@@ -13,7 +13,12 @@
     },
     "./style.css": "./dist/index.css"
   },
-  "files": ["dist", "src", "styles", "preset"],
+  "files": [
+    "dist",
+    "src",
+    "styles",
+    "preset"
+  ],
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
@@ -26,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-typescript": "^7.27.1",
+    "@storybook/addon-a11y": "7.6.20",
     "@storybook/addon-essentials": "7.6.20",
     "@storybook/addon-interactions": "7.6.20",
     "@storybook/addon-links": "7.6.20",

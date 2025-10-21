@@ -1,9 +1,10 @@
-// apps/web/src/pages/dashboard.tsx
+// apps/web/src/app/dashboard/page.tsx
 'use client';
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import { Button, TenantSelect, ProjectSelect,Card, CardHeader,CardTitle,CardDescription,CardContent,CardFooter} from "@novakit/ui";
+import { ProjectTable } from "../../components/ProjectTable";
 
 type Tenant = { id: string; name: string };
 type Project = { id: string; name: string; description?: string; tenant_id: string };
@@ -164,7 +165,10 @@ export default function DashboardPage() {
                 onChange={(projectId) => {
                     setSelectedProject(projectId);
                 }}
-            />      
+            /> 
+            {selectedProject && (
+                <ProjectTable projectId={selectedProject} />
+            )}     
         </div>
 
         <div>

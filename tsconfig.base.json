@@ -3,6 +3,7 @@
     "files": [],
     "references": [
         { "path": "packages/ui" },
+        { "path": "packages/core" },
         { "path": "apps/web" }
     ],
     "compilerOptions": {
@@ -12,8 +13,10 @@
         "strict": true,
         "skipLibCheck": true,
         "baseUrl": ".",
+        "rootDir": ".",
         "paths": {
-            "@novakit/ui": ["packages/ui/dist"]
+            "@novakit/ui": ["packages/ui/dist"],
+            "@novakit/core": ["packages/core/dist"]
         },
         "types": ["node", "react", "react-dom"],
         "lib": ["DOM","ESNext"],
