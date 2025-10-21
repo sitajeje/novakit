@@ -6,7 +6,6 @@ export type Task = {
     id: string;
     name: string;
     note?: string;
-    status?: string;
     is_done?: boolean;
     created_at?: string;
     project_id?: string;
@@ -31,29 +30,40 @@ export const useProjectsStore = create<TaskStore>((set, get) => ({
             .select("*")
             .eq("project_id", projectId)
             .order("created_at", { ascending: false });
-            if (!error) set({ tasks: data || [] });
+        if (!error) {
+            const mapped = (data || []).map((t: any) => ({
+                ...t,
+                is_done: !!t.status, // map DB boolean status -> UI is_done
+            }));
+            set({ tasks: mapped });
+        }
     },
 
     addTask: async (projectId, name, note = "") => {
         const supabase = createBrowserSupabase(); 
         const { data, error } = await supabase
-        .from("tasks")
-        .insert([{ project_id: projectId, name, note }])
-        .select()
-        .single();
-        if (!error && data) set({ tasks: [data, ...get().tasks] });
+            .from("tasks")
+            .insert([{ project_id: projectId, name, note, status: false }])
+            .select()
+            .single();
+        if (!error && data) {
+            const mapped = { ...data, is_done: !!data.status };
+            set({ tasks: [mapped, ...get().tasks] });
+        }
     },
 
     toggleTask: async (taskId, newStatus) => {
         const supabase = createBrowserSupabase(); 
         const { data, error } = await supabase
-        .from("tasks")
-        .update({ is_done: newStatus })
-        .eq("id", taskId)
-        .select()
-        .single();
-        if (!error && data)
-        set({ tasks: get().tasks.map((t) => (t.id === taskId ? data : t)) });
+            .from("tasks")
+            .update({ is_done: newStatus })
+            .eq("id", taskId)
+            .select()
+            .single();
+        if (!error && data) {
+            const mapped = { ...data, is_done: !!data.status };
+            set({ tasks: get().tasks.map((t) => (t.id === taskId ? mapped : t)) });
+        }
     },
 
     deleteTask: async (taskId) => {
@@ -66,12 +76,14 @@ export const useProjectsStore = create<TaskStore>((set, get) => ({
     updateTask: async (taskId, name, note) => {
         const supabase = createBrowserSupabase(); 
         const { data, error } = await supabase
-        .from("tasks")
-        .update({ name, note })
-        .eq("id", taskId)
-        .select()
-        .single();
-        if (!error && data)
-        set({ tasks: get().tasks.map((t) => (t.id === taskId ? data : t)) });
+            .from("tasks")
+            .update({ name, note })
+            .eq("id", taskId)
+            .select()
+            .single();
+        if (!error && data) {
+            const mapped = { ...data, is_done: !!data.status };
+            set({ tasks: get().tasks.map((t) => (t.id === taskId ? mapped : t)) });
+        }
     },
 }));

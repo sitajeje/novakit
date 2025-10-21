@@ -118,7 +118,7 @@ export default function DashboardPage() {
         const res = await fetch("/api/create-project", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, description, tenant_id: selectedTenant }),
+            body: JSON.stringify({ name, description, tenant_id: selectedTenant,user_id: user.id }),
         });
 
         const data = await res.json();
@@ -127,7 +127,33 @@ export default function DashboardPage() {
         alert(`Project "${name}" created successfully`);
         fetchProjects(selectedTenant);
     };
+    // [新增] Update a project (name/description)
+    const handleUpdateProject = async (projectId: string) => {
+        const name = prompt("New project name?");
+        if (!name) return;
+        const description = prompt("New description?") || "";
 
+        const { error } = await supabase
+            .from("projects")
+            .update({ name, description })
+            .eq("id", projectId);
+
+        if (error) return alert("Update failed: " + error.message);
+        // refresh local list
+        setProjects(prev => prev.map(p => p.id === projectId ? { ...p, name, description } : p));
+    };
+    // [新增] Delete a project
+    const handleDeleteProject = async (projectId: string) => {
+        if (!confirm("Confirm delete this project?")) return;
+        const { error } = await supabase
+            .from("projects")
+            .delete()
+            .eq("id", projectId);
+        if (error) return alert("Delete failed: " + error.message);
+
+        setProjects(prev => prev.filter(p => p.id !== projectId));
+        if (selectedProject === projectId) setSelectedProject(null);
+    };
 
     if (loading) return <div className="p-8">Loading...</div>;
 
@@ -164,11 +190,17 @@ export default function DashboardPage() {
                 selectedProject={selectedProject}
                 onChange={(projectId) => {
                     setSelectedProject(projectId);
+                    // move selected to top
+                    setProjects((prev) => {
+                    const idx = prev.findIndex(p => p.id === projectId);
+                    if (idx < 0) return prev;
+                    const sel = prev[idx];
+                    if (!sel) return prev;
+                    const rest = prev.filter((_, i) => i !== idx);
+                    return [sel, ...rest];
+                    });
                 }}
-            /> 
-            {selectedProject && (
-                <ProjectTable projectId={selectedProject} />
-            )}     
+            />    
         </div>
 
         <div>
@@ -185,9 +217,16 @@ export default function DashboardPage() {
                 </CardHeader>
 
                 <CardContent>
-                    <p className="text-sm text-muted-foreground">
-                    Tenant ID: {p.tenant_id}
-                    </p>
+                    {selectedProject === p.id && (
+                        <div className="mt-4 space-y-3">
+                            {p.description && (
+                            <div className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg border">
+                                {p.description}
+                            </div>
+                            )}
+                            <ProjectTable projectId={p.id} />
+                        </div>
+                    )}
                 </CardContent>
                 <CardFooter>
                     <Button
@@ -199,6 +238,8 @@ export default function DashboardPage() {
                     >
                     Open
                     </Button>
+                    <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleUpdateProject(p.id)}>Edit</Button>
+                    <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleDeleteProject(p.id)}>Delete</Button>
                 </CardFooter>
                 </Card>
             ))}

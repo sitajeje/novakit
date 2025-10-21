@@ -5,8 +5,8 @@ import { supabaseAdmin } from "../_utils/supabaseAdmin";
 
 export const POST = withApiHandler(async (req: Request) => {
     try {
-        const { name, description, tenant_id } = await req.json();
-        if (!name || !tenant_id) NextResponse.json({ error: "Missing parameters" }, { status: 400 });
+        const { name, description, tenant_id ,user_id} = await req.json();
+        if (!name || !tenant_id || !user_id) NextResponse.json({ error: "Missing parameters" }, { status: 400 });
 
         // 检查是否重名（同一个租户下不能重名）
         const { data: existing } = await supabaseAdmin
@@ -22,15 +22,23 @@ export const POST = withApiHandler(async (req: Request) => {
             );
         }
         
-        const { data, error } = await supabaseAdmin
+        const { data: project, error } = await supabaseAdmin
         .from("projects")
-        .insert([{ name, description, tenant_id }])
+        .insert([{ name, description, tenant_id,created_by: user_id }])
         .select()
         .single();
 
         if (error) throw error;
 
-        return NextResponse.json({ success: true, project: data }, { status: 200 });
+        // 把创建者加入 project_members
+        const { error: memberErr } = await supabaseAdmin
+            .from("project_members")
+            .insert([{ project_id: project.id, user_id, role: "owner" }]);
+
+        if (memberErr) {
+            console.error("⚠️ project_members insert failed:", memberErr.message);
+        }
+        return NextResponse.json({ success: true, project}, { status: 200 });
     } catch (err: any) {
         console.error("Create tenant failed:", err);
         return NextResponse.json({ error: err.message }, { status: 500 });

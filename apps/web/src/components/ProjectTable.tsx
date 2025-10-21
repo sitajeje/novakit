@@ -27,14 +27,14 @@ export function ProjectTable({ projectId }: Props) {
                 cell: ({ row }) => (
                 <input
                     type="radio"
-                    checked={row.original.status}
-                    onChange={() => toggleTask(row.original.id, row.original.status)}
+                    checked={row.original.is_done}
+                    onChange={() => toggleTask(row.original.id, !row.original.is_done)}
                     className="accent-cyan-500 cursor-pointer"
                 />
                 ),
             },
             {
-                accessorKey: "title",
+                accessorKey: "name",
                 header: "Task",
                 cell: ({ row }) => (
                 <span
