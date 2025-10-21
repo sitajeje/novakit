@@ -15,13 +15,20 @@ export function createServerSupabase(): SupabaseClient<any, "public", any> {
 
     return createServerClient(url, key, {
         cookies: {
-        get: (name: string) => cookieStore.get(name)?.value,
-        set: (name: string, value: string, options: any) => {
-            cookieStore.set(name, value, options);
+            async getAll() {
+                const all = await cookieStore.getAll();
+                if (!all) return null;
+                const list = Array.isArray(all) ? all : Array.from(all as Iterable<{ name: string; value: string }>);
+                return list.map(({ name, value }) => ({ name, value }));
+            },
+            setAll:
+                typeof cookieStore.set === "function"
+                    ? async (cookieList) => {
+                          cookieList.forEach(({ name, value, options }) => {
+                              cookieStore.set(name, value, options);
+                          });
+                      }
+                    : undefined,
         },
-        remove: (name: string, options: any) => {
-            cookieStore.set(name, "", { ...options, maxAge: 0 });
-        }
-        }
     });
 }

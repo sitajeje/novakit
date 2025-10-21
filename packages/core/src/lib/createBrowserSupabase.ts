@@ -7,11 +7,21 @@ import type { SupabaseClient } from "@supabase/supabase-js";
  * - 仅在 CSR/Client Component 使用
  * - 避免服务端加载 node-fetch 依赖，从而触发 "stream" 错误
  */
-export function createBrowserSupabase(): SupabaseClient<any, "public", any> {
+let browserClient: SupabaseClient<any, "public", any> | null = null;
+
+export const createBrowserSupabase = (): SupabaseClient<any, "public", any> => {
     if (typeof window === "undefined") {
         throw new Error("createBrowserSupabase() must be called in the browser.");
     }
+
+    if (browserClient) {
+        return browserClient;
+    }
+
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    return createBrowserClient(url, anon);
-}
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    if (!url || !key) throw new Error("Missing Supabase env vars for browser.");
+
+    browserClient = createBrowserClient(url, key, { isSingleton: true });
+    return browserClient;
+};
