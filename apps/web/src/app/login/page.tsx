@@ -1,10 +1,11 @@
 // apps/web/src/pages/login.tsx
 'use client';
 import { useState, useEffect } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { createBrowserSupabase } from "@novakit/core";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+    const supabase = createBrowserSupabase();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);

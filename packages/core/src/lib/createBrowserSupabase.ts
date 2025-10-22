@@ -1,4 +1,5 @@
 // packages/core/src/lib/createBrowserSupabase.ts
+'use client';
 import { createBrowserClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -11,7 +12,8 @@ let browserClient: SupabaseClient<any, "public", any> | null = null;
 
 export const createBrowserSupabase = (): SupabaseClient<any, "public", any> => {
     if (typeof window === "undefined") {
-        throw new Error("createBrowserSupabase() must be called in the browser.");
+        console.warn("[createBrowserSupabase] called on server. returning dummy client.");
+        return {} as SupabaseClient<any, "public", any>;
     }
 
     if (browserClient) {
@@ -22,6 +24,12 @@ export const createBrowserSupabase = (): SupabaseClient<any, "public", any> => {
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     if (!url || !key) throw new Error("Missing Supabase env vars for browser.");
 
-    browserClient = createBrowserClient(url, key, { isSingleton: true });
+    browserClient = createBrowserClient(url, key, { 
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+            storage: window.localStorage,
+        }, });
     return browserClient;
 };

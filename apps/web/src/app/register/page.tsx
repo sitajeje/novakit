@@ -1,10 +1,11 @@
 // apps/web/src/pages/register.tsx
 'use client';
 import { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { createBrowserSupabase } from "@novakit/core";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+    const supabase = createBrowserSupabase();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);

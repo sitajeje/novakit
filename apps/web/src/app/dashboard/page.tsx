@@ -1,7 +1,7 @@
 // apps/web/src/app/dashboard/page.tsx
 'use client';
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { createBrowserSupabase } from "@novakit/core";
 import { useRouter } from "next/navigation";
 import { Button, TenantSelect, ProjectSelect,Card, CardHeader,CardTitle,CardDescription,CardContent,CardFooter} from "@novakit/ui";
 import { ProjectTable } from "../../components/ProjectTable";
@@ -10,6 +10,7 @@ type Tenant = { id: string; name: string };
 type Project = { id: string; name: string; description?: string; tenant_id: string };
 
 export default function DashboardPage() {
+    const supabase = createBrowserSupabase();
     const router = useRouter();
     const [user, setUser] = useState<any>(null);
     const [tenants, setTenants] = useState<Tenant[]>([]);
@@ -23,7 +24,7 @@ export default function DashboardPage() {
         const init = async () => {
         const { data } = await supabase.auth.getSession();
         if (!data.session) {
-            router.replace("../login/login");
+            router.replace("../login");
             return;
         }
         const user = data.session.user;
@@ -35,7 +36,7 @@ export default function DashboardPage() {
 
         // 监听 auth 状态变化（登出）
         const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-        if (!session) router.replace("../login/login");
+        if (!session) router.replace("../login");
         });
         return () => listener?.subscription?.unsubscribe?.();
     }, []);
