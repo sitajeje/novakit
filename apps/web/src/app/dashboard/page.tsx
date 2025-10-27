@@ -18,7 +18,6 @@ export default function DashboardPage() {
     const [loading, setLoading] = useState(true);
     const [selectedTenant, setSelectedTenant] = useState<string | null>(null);
     const [selectedProject, setSelectedProject] = useState<string | null>(null);
-    const [inviteEmail, setInviteEmail] = useState("");
 
     useEffect(() => {
         const init = async () => {
@@ -193,16 +192,6 @@ export default function DashboardPage() {
                 <Button className="bg-blue-600" onClick={handleCreateProject}>
                     Create Project
                 </Button>
-                <Button
-                className="bg-yellow-500 ml-2"
-                onClick={async () => {
-                    const { data, error } = await supabase.auth.getUser();
-                    if (error) console.error(error);
-                    alert(JSON.stringify(data, null, 2));
-                }}
-                >
-                Check Session
-                </Button>
 
             </div>
         </div>
@@ -256,13 +245,12 @@ export default function DashboardPage() {
                 </CardContent>
                 <CardFooter>
                     <Button
-                    className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition"
+                    className="bg-primary mr-2"
                     onClick={() => {
-                        setSelectedProject(p.id);
-                        router.push(`/projects/${p.id}`);
+                        setSelectedProject(selectedProject === p.id ? null : p.id);
                     }}
                     >
-                    Open
+                    {selectedProject === p.id ? "Close" : "Open"}
                     </Button>
                     <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleUpdateProject(p.id)}>Edit</Button>
                     <Button className="bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:opacity-90 transition" onClick={() => handleDeleteProject(p.id)}>Delete</Button>
